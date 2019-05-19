@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
       },
       child: Icon(Icons.refresh),),
-      body: Text(text),
+      body: Center(child: Card(child: Text(text))),
     );
   }
 }
