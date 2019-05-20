@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:insults/insults.dart';
 import 'dart:convert' as convert;
 import 'package:flutter_tts/flutter_tts.dart';
-
+import 'package:share/share.dart';
+import 'package:clipboard_manager/clipboard_manager.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -93,6 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
     voices = await flutterTts.getVoices;
     if (voices != null) setState(() => voices);
   }
+  
+  _share(){
+    Share.share(insultText);
+    
+  }
   @override
   void dispose() {
     super.dispose();
@@ -138,9 +144,30 @@ class _MyHomePageState extends State<MyHomePage> {
             child: ButtonBar(
               children: <Widget>[
                 FlatButton(
-                  child: const Text('LISTEN'),
+                  child: const Text('Speak It Out'),
                   onPressed: () {
                     _speak();
+                  },
+                ),
+                FlatButton(
+                  child: const Text('Copy'),
+                  onPressed: () {
+                    ClipboardManager.copyToClipBoard(insultText).then((result) {
+                      final snackBar = SnackBar(
+                        content: Text('Copied to Clipboard'),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {},
+                        ),
+                      );
+                      Scaffold.of(context).showSnackBar(snackBar);
+                    });
+                  },
+                ),
+                FlatButton(
+                  child: const Text('Share'),
+                  onPressed: () {
+                    _share();
                   },
                 ),
               ],
