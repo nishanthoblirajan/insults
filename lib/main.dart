@@ -122,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
             var jsonResponse = convert.jsonDecode(response.body);
             String insult = jsonResponse['insult'];
             String number = jsonResponse['number'];
+            insult = insult.replaceAll("&quot;","'");
             setState(() {
               insultText = insult;
               insultNumber = '#$number';
